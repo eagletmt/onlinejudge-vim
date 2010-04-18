@@ -1,0 +1,104 @@
+*onlinejudge.jax*       オンラインジャッジ支援
+
+Author : eagletmt <eagletmt@gmail.com>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+==============================================================================
+CONTENTS                                                 *oninejudge-contents*
+
+Introduction            |onlinejudge-intro|
+Interface               |onlinejudge-interface|
+  Commands                |onlinejudge-commands|
+  Variables               |onlinejudge-variables|
+Examples                |onlinejudge-examples|
+Vimrc-Example           |onlinejudge-vimrc-example|
+
+==============================================================================
+INTRODUCTION                                               *onlinejudge-intro*
+
+onlinejudge はオンラインジャッジを Vim から快適に楽しむためのプラグインです．
+初期状態では
+- PKU Online Judge <http://acm.pku.edu.cn/JudgeOnline/>
+- Sphere Online Judge <http://www.spoj.pl/>
+に対応しています．
+サンプル入力の取得や解答のサブミットは本体とは別に実装されているので，簡単に
+拡張できるようになっています．
+
+cURL <http://curl.haxx.se/> が必須です．
+
+==============================================================================
+INTERFACE                                              *onlinejudge-interface*
+
+------------------------------------------------------------------------------
+COMMANDS                                                *onlinejudge-commands*
+
+:Submit {service} [problem_id]                                       *:Submit*
+        カレントバッファの内容を解答としてサブミットします． [problem_id] の解
+        釈は各プラグインに任されています．
+        その後，自分のステータスを表示するバッファを開きます．このバッファでは
+        <Leader><Leader> に |:UserStatus| が割り当てられています．
+
+:UserStatus {service}                                            *:UserStatus*
+        自分のステータスを表示します．
+
+:Test {service} [problem_id]                                           *:Test*
+        カレントバッファの内容をテストします．実行には |quickrun| が必要です．
+
+        |filetype| が onlinejudge-input であるバッファがある場合はその内容が標
+        準入力として使われ，無い場合はサンプル入力を取得しそれが使われます．そ
+        して，実行結果と |filetype| が onlinejudge-output であるバッファの差分
+        を表示します．
+
+------------------------------------------------------------------------------
+VARIABLES                                              *onlinejudge-variables*
+
+g:onlinejudge_account
+       各オンラインジャッジにおける自分のユーザ名とパスワードを設定します．こ
+       れが設定されていない場合，コマンドを実行したときに尋ねられることになり
+       ます．
+       |onlinejudge-vimrc-example| を参照してください．
+
+==============================================================================
+EXAMPLES                                                *onlinejudge-examples*
+
+PKU の 1000 <http://acm.pku.edu.cn/JudgeOnline/problem?id=1000> にサブミット
+>
+        :Submit poj 1000
+<
+
+SPOJ の TEST <https://www.spoj.pl/problems/TEST/> にサブミット
+>
+        :Submit spoj TEST
+<
+
+==============================================================================
+VIMRC-EXAMPLE                                      *onlinejudge-vimrc-example*
+
+>
+        let g:onlinejudge_account = {
+              \ 'poj': {'user': 'eagletmt_', 'pass': 'XXX'},
+              \ 'spoj': {'user': 'eagletmt', 'pass': 'XXX'},
+              \ }
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:fdm=marker:
+
