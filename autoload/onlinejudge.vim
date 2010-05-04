@@ -75,10 +75,12 @@ function! onlinejudge#test(service, problem_id) " {{{
   call s:new_unique('onlinejudge-output', a:service . '-output', '')
   setlocal buftype=nofile bufhidden=hide noswapfile
   diffthis
+  %delete _
   call setline(1, output)
 
   call s:new_unique('onlinejudge-input', a:service . '-input', 'vertical')
   setlocal buftype=nofile bufhidden=hide noswapfile
+  %delete _
   call setline(1, input)
 
   execute bufwinnr(src_bufnr) . 'wincmd w'
