@@ -58,18 +58,27 @@ function! onlinejudge#test(service, problem_id) " {{{
   let output = []
 
   let input_bufnr = s:bufnr_filetype('onlinejudge-input')
-  if input_bufnr == 0
-    let [input, output] = onlinejudge#sample_io(a:service, a:problem_id)
-    if empty(input)
+  let output_bufnr = s:bufnr_filetype('onlinejudge-output')
+  if input_bufnr == 0 || output_bufnr == 0
+    let [i, o] = onlinejudge#sample_io(a:service, a:problem_id)
+    if empty(i)
       echoerr 'failed to get sample input!'
       return
     endif
-    if empty(output)
+    if empty(o)
       echoerr 'failed to get sample output!'
       return
     endif
+  endif
+  if input_bufnr == 0
+    let input = i
   else
     let input = getbufline(input_bufnr, 1, '$')
+  endif
+  if output_bufnr == 0
+    let output = o
+  else
+    let output = getbufline(output_bufnr, 1, '$')
   endif
 
   call s:new_unique('onlinejudge-output', a:service . '-output', '')
