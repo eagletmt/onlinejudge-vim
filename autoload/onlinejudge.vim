@@ -81,14 +81,17 @@ function! onlinejudge#test(service, problem_id) " {{{
     let output = getbufline(output_bufnr, 1, '$')
   endif
 
+  let height = min([max([len(input), len(output), 3]), 10])
   call s:new_unique('onlinejudge-output', a:service . '-output', '')
   setlocal buftype=nofile bufhidden=hide noswapfile
   diffthis
+  execute 'resize ' . height
   %delete _
   call setline(1, output)
 
   call s:new_unique('onlinejudge-input', a:service . '-input', 'vertical')
   setlocal buftype=nofile bufhidden=hide noswapfile
+  execute 'resize ' . height
   %delete _
   call setline(1, input)
 
