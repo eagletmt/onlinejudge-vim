@@ -38,6 +38,7 @@ onlinejudge はオンラインジャッジを Vim から快適に楽しむため
 初期状態では
 - PKU Online Judge <http://acm.pku.edu.cn/JudgeOnline/>
 - Sphere Online Judge <http://www.spoj.pl/>
+- Aizu Online Judge <http://rose.u-aizu.ac.jp/onlinejudge/index.jsp>
 に対応しています．
 サンプル入力の取得や解答のサブミットは本体とは別に実装されているので，簡単に
 拡張できるようになっています．
@@ -96,6 +97,7 @@ VIMRC-EXAMPLE                                      *onlinejudge-vimrc-example*
         let g:onlinejudge_account = {
               \ 'poj': {'user': 'eagletmt_', 'pass': 'XXX'},
               \ 'spoj': {'user': 'eagletmt', 'pass': 'XXX'},
+              \ 'aoj': {'user': 'eagletmt', 'pass': 'XXX'},
               \ }
 <
 
