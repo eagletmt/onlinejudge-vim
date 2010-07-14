@@ -78,6 +78,9 @@ function! onlinejudge#aoj#sample_io(user, pass, problem_id)  " {{{
   let input = matchstr(res, '<H\d>Sample Input</H\d>[\s\r\n]*<pre>\zs.\{-\}\ze</pre>')
   let input = substitute(input, '\r\n', "\n", 'g')
   let output = matchstr(res, '<H\d>Output for the Sample Input</H\d>[\s\r\n]*<pre>\zs.\{-\}\ze</pre>')
+  if empty(output)
+    let output = matchstr(res, '<H\d>Sample Output</H\d>[\s\r\n]*<pre>\zs.\{-\}\ze</pre>')
+  endif
   let output = substitute(output, '\r\n', "\n", 'g')
   return [split(input, '\n'), split(output, '\n')]
 endfunction " }}}
