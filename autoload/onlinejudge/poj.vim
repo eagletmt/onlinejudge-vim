@@ -24,9 +24,10 @@
 "=============================================================================
 
 function! s:login(user, pass) " {{{
-  call onlinejudge#curl('POST', 'http://acm.pku.edu.cn/JudgeOnline/login',
-        \ {'user_id1': a:user, 'password1': a:pass, 'url': '/JudgeOnline/'},
+  let r = onlinejudge#curl('POST', 'http://poj.org/login',
+        \ {'user_id1': a:user, 'password1': a:pass, 'url': '/'},
         \ {'-c': s:cookie_file})
+  echom r
 endfunction " }}}
 
 let s:lang2nr = {
@@ -76,13 +77,13 @@ function! onlinejudge#poj#submit(user, pass, problem_id) " {{{
   if lang == 'Java'
     let src = substitute(src, '\npublic class \zs\w\+\ze', 'Main', '')
   endif
-  call onlinejudge#curl('POST', 'http://acm.pku.edu.cn/JudgeOnline/submit',
+  call onlinejudge#curl('POST', 'http://poj.org/submit',
         \ {'problem_id': a:problem_id, 'language': s:lang2nr[lang], 'source': src},
         \ {'-b': s:cookie_file})
 endfunction " }}}
 
 function! onlinejudge#poj#user_status(user, pass)  " {{{
-  let res = onlinejudge#curl('GET', 'http://acm.pku.edu.cn/JudgeOnline/status',
+  let res = onlinejudge#curl('GET', 'http://poj.org/status',
         \ {'user_id': a:user}, {})
   let lines = []
   for l in split(res, '\n')
@@ -96,7 +97,7 @@ function! onlinejudge#poj#user_status(user, pass)  " {{{
 endfunction " }}}
 
 function! onlinejudge#poj#sample_io(user, pass, problem_id)  " {{{
-  let res = onlinejudge#curl('GET', 'http://acm.pku.edu.cn/JudgeOnline/problem',
+  let res = onlinejudge#curl('GET', 'http://poj.org/problem',
         \ {'id': a:problem_id}, {})
   let input = matchstr(res, '<pre class="sio">\zs.\{-\}\ze</pre>', 0, 1)
   let input = substitute(input, '\r\n', "\n", 'g')
