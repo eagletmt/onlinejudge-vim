@@ -36,9 +36,10 @@ INTRODUCTION                                               *onlinejudge-intro*
 
 onlinejudge はオンラインジャッジを Vim から快適に楽しむためのプラグインです．
 初期状態では
-- PKU Online Judge <http://acm.pku.edu.cn/JudgeOnline/>
+- PKU Online Judge <http://poj.org/>
 - Sphere Online Judge <http://www.spoj.pl/>
 - Aizu Online Judge <http://rose.u-aizu.ac.jp/onlinejudge/index.jsp>
+- M-Judge <http://m-judge.maximum.vc/>
 に対応しています．
 サンプル入力の取得や解答のサブミットは本体とは別に実装されているので，簡単に
 拡張できるようになっています．
@@ -80,7 +81,7 @@ g:onlinejudge_account
 ==============================================================================
 EXAMPLES                                                *onlinejudge-examples*
 
-PKU の 1000 <http://acm.pku.edu.cn/JudgeOnline/problem?id=1000> にサブミット
+PKU の 1000 <http://poj.org/problem?id=1000> にサブミット
 >
         :Submit poj 1000
 <
