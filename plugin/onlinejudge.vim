@@ -32,9 +32,9 @@ if !executable('curl')
   finish
 endif
 
-command! -nargs=+ -complete=customlist,onlinejudge#submit_complete Submit call onlinejudge#submit(<q-args>)
-command! -nargs=+ -complete=customlist,onlinejudge#service_complete UserStatus call onlinejudge#user_status(<f-args>)
-command! -nargs=+ -complete=customlist,onlinejudge#submit_complete Test call onlinejudge#test(<f-args>)
+command! -nargs=+ -complete=customlist,onlinejudge#submit_complete OnlineJudgeSubmit call onlinejudge#submit(<q-args>)
+command! -nargs=+ -complete=customlist,onlinejudge#service_complete OnlineJudgeUserStatus call onlinejudge#user_status(<f-args>)
+command! -nargs=+ -complete=customlist,onlinejudge#submit_complete OnlineJudgeTest call onlinejudge#test(<f-args>)
 
 let g:loaded_onlinejudge = 1
 
