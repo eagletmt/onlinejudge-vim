@@ -46,26 +46,28 @@ function! onlinejudge#aoj#submit(user, pass, problem_id) " {{{
   if lang == 'JAVA'
     let src = substitute(src, '\npublic class \zs\w\+\ze', 'Main', '')
   endif
-  call onlinejudge#curl('POST', 'http://rose.u-aizu.ac.jp/onlinejudge/servlet/Submit',
+  call onlinejudge#curl('POST', 'http://judge.u-aizu.ac.jp/onlinejudge/servlet/Submit',
         \ {'userID': a:user, 'password': a:pass, 'problemNO': a:problem_id,
         \ 'language': lang, 'sourceCode': src, 'submit': 'Send'}, {})
 endfunction " }}}
 
 function! onlinejudge#aoj#user_status(user, pass)  " {{{
-  let res = onlinejudge#curl('GET', 'http://rose.u-aizu.ac.jp/onlinejudge/Status.jsp',
+  let res = onlinejudge#curl('GET', 'http://judge.u-aizu.ac.jp/onlinejudge/status.jsp',
         \ {}, {})
-  let table = matchstr(res, '<table class="status" [^>]\+>\zs.\{-\}\ze</table>')
+  let table = matchstr(res, '<table [^>]\+>\zs.\{-\}\ze</table>')
   let lines = []
   for l in split(table, '<tr[^>]\+>')[2:]
-    let author = matchstr(l, 'href="UserInfo.jsp?id=\zs[^"]\+')
+    let author = matchstr(l, 'href="user.jsp?id=\zs[^"]\+')
     let problem = matchstr(l, 'description.jsp?id=\zs\d\+')
-    let result = substitute(matchstr(l, '<FONT \+COLOR[^>]\+>\zs.\{-\}\ze</FONT>'), '<[^>]\+>', '', 'g')
+    let result = substitute(matchstr(l, '<span \+class="status[^>]\+>\zs.\{-\}\ze</span>'), '<[^>]\+>', '', 'g')[2:]
 
     let ths = split(l, '\n')
     call map(ths, 'substitute(v:val, "<[^>]*>", "", "g")')
     call filter(ths, 'v:val !~# "^\\s*$"')
     call reverse(ths)
-    let [date, code, memory, time, lang] = ths[0:4]
+    let ths = ths[0:4]
+    call map(ths, 'substitute(v:val, "^\\s*", "", "")')
+    let [date, code, memory, time, lang] = ths
     call add(lines, join([author, problem, result, lang, time, memory, code, date], "\t"))
   endfor
   return lines
@@ -73,7 +75,7 @@ endfunction " }}}
 
 function! onlinejudge#aoj#sample_io(user, pass, problem_id)  " {{{
   let res = onlinejudge#curl('GET',
-        \ 'http://rose.u-aizu.ac.jp/onlinejudge/ProblemSet/description.jsp',
+        \ 'http://judge.u-aizu.ac.jp/onlinejudge/description.jsp',
         \ {'id': a:problem_id}, {})
   let input = matchstr(res, '<H\d>Sample Input</H\d>[\s\r\n]*<pre>\zs.\{-\}\ze</pre>')
   let input = substitute(input, '\r\n', "\n", 'g')
