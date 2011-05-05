@@ -77,7 +77,7 @@ function! onlinejudge#aoj#sample_io(user, pass, problem_id)  " {{{
         \ {'id': a:problem_id}, {})
   let input = matchstr(res, '<H\d>Sample Input</H\d>[\s\r\n]*<pre>\zs.\{-\}\ze</pre>')
   let input = substitute(input, '\r\n', "\n", 'g')
-  let output = matchstr(res, '<H\d>Output for the Sample Input</H\d>[\s\r\n]*<pre>\zs.\{-\}\ze</pre>')
+  let output = matchstr(res, '<H\d>Output for \(the \)\?Sample Input</H\d>[\s\r\n]*<pre>\zs.\{-\}\ze</pre>')
   if empty(output)
     let output = matchstr(res, '<H\d>Sample Output</H\d>[\s\r\n]*<pre>\zs.\{-\}\ze</pre>')
   endif
@@ -90,5 +90,3 @@ function! onlinejudge#aoj#submit_complete(arglead, cmdline, cursorpos)  " {{{
 endfunction " }}}
 
 " vim: set et ts=2 sw=2 sts=2 fdm=marker:"
-
-
