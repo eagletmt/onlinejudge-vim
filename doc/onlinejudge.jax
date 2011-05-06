@@ -36,10 +36,10 @@ INTRODUCTION                                               *onlinejudge-intro*
 
 onlinejudge はオンラインジャッジを Vim から快適に楽しむためのプラグインです．
 初期状態では
-- PKU Online Judge <http://poj.org/>
-- Sphere Online Judge <http://www.spoj.pl/>
-- Aizu Online Judge <http://rose.u-aizu.ac.jp/onlinejudge/index.jsp>
-- M-Judge <http://m-judge.maximum.vc/>
+- PKU Online Judge (poj) <http://poj.org/>
+- Sphere Online Judge (spoj) <http://www.spoj.pl/>
+- Aizu Online Judge (aoj) <http://judge.u-aizu.ac.jp/onlinejudge/index.jsp>
+- M-Judge (mjudge) <http://m-judge.maximum.vc/>
 に対応しています．
 サンプル入力の取得や解答のサブミットは本体とは別に実装されているので，簡単に
 拡張できるようになっています．
@@ -52,16 +52,16 @@ INTERFACE                                              *onlinejudge-interface*
 ------------------------------------------------------------------------------
 COMMANDS                                                *onlinejudge-commands*
 
-:Submit {service} [problem_id]                                       *:Submit*
+:OnlineJudgeSubmit {service} [problem_id]                 *:OnlineJudgeSubmit*
         カレントバッファの内容を解答としてサブミットします． [problem_id] の解
         釈は各プラグインに任されています．
         その後，自分のステータスを表示するバッファを開きます．このバッファでは
-        <Leader><Leader> に |:UserStatus| が割り当てられています．
+        <Leader><Leader> に |:OnlineJudgeUserStatus| が割り当てられています．
 
-:UserStatus {service}                                            *:UserStatus*
+:OnlineJudgeUserStatus {service}                      *:OnlineJudgeUserStatus*
         自分のステータスを表示します．
 
-:Test {service} [problem_id]                                           *:Test*
+:OnlineJudgeTest {service} [problem_id]                     *:OnlineJudgeTest*
         カレントバッファの内容をテストします．実行には |quickrun| が必要です．
 
         |filetype| が onlinejudge-input であるバッファがある場合はその内容が標
@@ -83,12 +83,12 @@ EXAMPLES                                                *onlinejudge-examples*
 
 PKU の 1000 <http://poj.org/problem?id=1000> にサブミット
 >
-        :Submit poj 1000
+        :OnlineJudgeSubmit poj 1000
 <
 
 SPOJ の TEST <https://www.spoj.pl/problems/TEST/> にサブミット
 >
-        :Submit spoj TEST
+        :OnlineJudgeSubmit spoj TEST
 <
 
 ==============================================================================
