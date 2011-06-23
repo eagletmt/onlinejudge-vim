@@ -96,13 +96,10 @@ function! onlinejudge#test(service, problem_id) " {{{
   call setline(1, input)
 
   execute bufwinnr(src_bufnr) . 'wincmd w'
-  if !exists('b:quickrun_config')
-    let b:quickrun_config = {}
-  endif
-  let saved = get(b:quickrun_config, 'input', '')
-  let b:quickrun_config.input = '=' . substitute(join(input, "\n"), '[@$&{]', '\\\0', 'g')
-  QuickRun -runmode simple
-  let b:quickrun_config.input = saved
+  let config = {
+        \ 'input': '=' . substitute(join(input, "\n"), '[@$&{]', '\\\0', 'g'),
+        \ }
+  call quickrun#run(config)
 
   let quickrun_bufnr = s:bufnr_filetype('quickrun')
   execute bufwinnr(quickrun_bufnr) . 'wincmd w'
