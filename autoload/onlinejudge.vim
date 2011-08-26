@@ -97,7 +97,7 @@ function! onlinejudge#test(service, problem_id) " {{{
 
   execute bufwinnr(src_bufnr) . 'wincmd w'
   let config = {
-        \ 'input': '=' . substitute(join(input, "\n"), '[@$&{]', '\\\0', 'g'),
+        \ 'input': '=' . substitute(join(input, "\n"), '[@$&]', '\\\0', 'g'),
         \ }
   call quickrun#run(config)
 
