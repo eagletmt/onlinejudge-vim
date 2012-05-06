@@ -96,10 +96,10 @@ function! onlinejudge#test(service, problem_id) " {{{
   call setline(1, input)
 
   execute bufwinnr(src_bufnr) . 'wincmd w'
-  let config = {
-        \ 'input': '=' . substitute(join(input, "\n"), '[@$&]', '\\\0', 'g'),
-        \ }
-  call quickrun#run(config)
+  call quickrun#run({
+        \ 'hook/onlinejudge/enable': 1,
+        \ 'hook/onlinejudge/input': join(input, "\n"),
+        \ })
 
   let quickrun_bufnr = s:bufnr_filetype('quickrun')
   execute bufwinnr(quickrun_bufnr) . 'wincmd w'
